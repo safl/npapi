@@ -1,0 +1,38 @@
+/**
+ * {{ meta.project | lower }}; Command Preparation API Implementation
+ *
+ * TODO
+ * ====
+ *
+ * - use bit-mask and shift instead of relying on compiler-bitfields
+ *   - code-generator knows widths and offset, can directly mask/shift instead
+ *     of relying on macros
+ * - add use of little-endian types
+ * - add use of little-endian conversion
+ */
+#include <stdbool.h>
+#include <stdint.h>
+#include <libnvme_core.h>
+
+{% for prepper in data %}
+int
+{{ prepper.sym }}_prep(void *cmd_buf, 
+{%- for typ, acc, sym, doc in prepper.params -%}
+{{ typ }} {{ sym }}
+{% if not loop.last %},{% endif %}
+{%- endfor -%}
+)
+{
+        struct {{ prepper.sym }} *cmd = cmd_buf; 
+
+        cmd->opc = {{ "0x%x" % prepper.opc }};
+
+        {% for typ, acc, sym, doc in prepper.params -%}
+        cmd->{{ acc }} = {{ sym }};
+        {%- endfor %}
+
+        // TODO: replace bit-fields with bit-masking
+
+        return 0;
+}
+{% endfor %}
