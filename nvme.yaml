@@ -687,7 +687,7 @@ nvm:
     opc: 0x1
   members:
   - {cls: field, sym: opc, typ: u8, fmt: '%d', doc: Command Opcode}
-  - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Command Opcode}
+  - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Reserved}
   - {cls: field, sym: cid, typ: u16, fmt: '%d', doc: Command Identifier}
   - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier"}
   - {cls: field, sym: cdw02, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 02}
@@ -736,7 +736,7 @@ nvm:
     opc: 0x2
   members:
   - {cls: field, sym: opc, typ: u8, fmt: '%d', doc: Command Opcode}
-  - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Command Opcode}
+  - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Reserved}
   - {cls: field, sym: cid, typ: u16, fmt: '%d', doc: Command Identifier}
   - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier"}
   - {cls: field, sym: cdw02, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 02}
@@ -785,7 +785,7 @@ nvm:
     opc: 0x4
   members:
   - {cls: field, sym: opc, typ: u8, fmt: '%d', doc: Command Opcode}
-  - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Command Opcode}
+  - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Reserved}
   - {cls: field, sym: cid, typ: u16, fmt: '%d', doc: Command Identifier}
   - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier"}
   - {cls: field, sym: cdw02, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 02}

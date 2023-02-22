@@ -31,7 +31,7 @@ int
         cmd->{{ acc }} = {{ sym }};
         {%- endfor %}
 
-        // TODO: replace bit-fields with bit-masking
+        // TODO: replace '.bits'-accessor, with inline, compound bit-mask+shift
 
         return 0;
 }

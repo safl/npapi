@@ -1,0 +1,8 @@
+# cmd(gcc --version)
+# cwd(/Users/safl/git/npapi/output/npapi)
+Apple clang version 14.0.0 (clang-1400.0.29.202)
+Target: arm64-apple-darwin22.2.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+# cmd(gcc -std=c99 -pedantic-errors -Wall -Werror -I /Users/safl/git/npapi/output/npapi /Users/safl/git/npapi/output/npapi/nvme_prep.c /Users/safl/git/npapi/output/npapi/nvme_pp.c /Users/safl/git/npapi/output/npapi/nvme_check.c)
+# cwd(/Users/safl/git/npapi/output/npapi)

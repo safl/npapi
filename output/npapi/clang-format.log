@@ -1,0 +1,7 @@
+# cmd(clang-format --version)
+# cwd(/Users/safl/git/npapi/output/npapi)
+clang-format version 15.0.7
+# cmd(clang-format --style=file:clang-format-c.clang-format -i /Users/safl/git/npapi/output/npapi/nvme_prep.c /Users/safl/git/npapi/output/npapi/nvme_pp.c /Users/safl/git/npapi/output/npapi/nvme_check.c)
+# cwd(/Users/safl/git/npapi/output/npapi)
+# cmd(clang-format --style=file:clang-format-h.clang-format -i /Users/safl/git/npapi/output/npapi/libnvme_prep.h /Users/safl/git/npapi/output/npapi/libnvme_core.h /Users/safl/git/npapi/output/npapi/libnvme_pp.h /Users/safl/git/npapi/output/npapi/libnvme.h)
+# cwd(/Users/safl/git/npapi/output/npapi)
