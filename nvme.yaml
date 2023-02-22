@@ -689,7 +689,7 @@ nvm:
   - {cls: field, sym: opc, typ: u8, fmt: '%d', doc: Command Opcode}
   - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Reserved}
   - {cls: field, sym: cid, typ: u16, fmt: '%d', doc: Command Identifier}
-  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier"}
+  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier}
   - {cls: field, sym: cdw02, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 02}
   - {cls: field, sym: cdw03, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 03}
   - {cls: field, sym: cdw04, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 04}
@@ -714,12 +714,7 @@ nvm:
     - {cls: bits, sym: lr, width: 1, doc: Limited Retry}
   - {cls: field, sym: dspec, typ: u8, fmt: '0x%"PRIx8"', doc: Directive Specific}
   - {cls: field, sym: rsvd1, typ: u8, fmt: '0x%"PRIx8"', doc: Reserved}
-  - cls: bitfield
-    sym: bits2
-    width: 8
-    doc: Command Dword 13
-    members:
-    - {cls: bits, sym: rsvd, width: 8, doc: Reserved}
+  - {cls: field, sym: cdw13, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 13}
   - {cls: field, sym: cdw14, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 14}
   - cls: bitfield
     sym: bits3
@@ -738,7 +733,7 @@ nvm:
   - {cls: field, sym: opc, typ: u8, fmt: '%d', doc: Command Opcode}
   - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Reserved}
   - {cls: field, sym: cid, typ: u16, fmt: '%d', doc: Command Identifier}
-  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier"}
+  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier}
   - {cls: field, sym: cdw02, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 02}
   - {cls: field, sym: cdw03, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 03}
   - {cls: field, sym: cdw04, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 04}
@@ -763,12 +758,7 @@ nvm:
     - {cls: bits, sym: lr, width: 1, doc: Limited Retry}
   - {cls: field, sym: dspec, typ: u8, fmt: '0x%"PRIx8"', doc: Directive Specific}
   - {cls: field, sym: rsvd1, typ: u8, fmt: '0x%"PRIx8"', doc: Reserved}
-  - cls: bitfield
-    sym: bits2
-    width: 8
-    doc: Command Dword 13
-    members:
-    - {cls: bits, sym: rsvd, width: 8, doc: Reserved}
+  - {cls: field, sym: cdw13, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 13}
   - {cls: field, sym: cdw14, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 14}
   - cls: bitfield
     sym: bits3
@@ -787,7 +777,7 @@ nvm:
   - {cls: field, sym: opc, typ: u8, fmt: '%d', doc: Command Opcode}
   - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Reserved}
   - {cls: field, sym: cid, typ: u16, fmt: '%d', doc: Command Identifier}
-  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier"}
+  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier}
   - {cls: field, sym: cdw02, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 02}
   - {cls: field, sym: cdw03, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 03}
   - {cls: field, sym: cdw04, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 04}
@@ -804,7 +794,6 @@ nvm:
     members:
     - {cls: bits, sym: nlb, width: 16, doc: Number of Logical Blocks}
     - {cls: bits, sym: rsvd_cdw12, width: 16, doc: Reserved}
-
   - {cls: field, sym: cdw13, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 13}
   - {cls: field, sym: cdw14, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 14}
   - {cls: field, sym: cdw15, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 15}
@@ -818,7 +807,7 @@ nvm:
   - {cls: field, sym: opc, typ: u8, fmt: '%d', doc: Command Opcode}
   - {cls: field, sym: rsvd_cdw0, typ: u8, fmt: '%d', doc: Command Opcode}
   - {cls: field, sym: cid, typ: u16, fmt: '%d', doc: Command Identifier}
-  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier"}
+  - {cls: field, sym: nsid, typ: u32, fmt: '0x%"PRIx32"', doc: Namespace Identifier}
   - {cls: field, sym: cdw02, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 02}
   - {cls: field, sym: cdw03, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 03}
   - {cls: field, sym: cdw04, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 04}
@@ -835,7 +824,6 @@ nvm:
     members:
     - {cls: bits, sym: nlb, width: 16, doc: Number of Logical Blocks}
     - {cls: bits, sym: rsvd_cdw12, width: 16, doc: Reserved}
-
   - {cls: field, sym: cdw13, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 13}
   - {cls: field, sym: cdw14, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 14}
   - {cls: field, sym: cdw15, typ: u32, fmt: '0x%"PRIx32"', doc: Command Dword 15}

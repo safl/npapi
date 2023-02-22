@@ -10,7 +10,7 @@
 /**
  * NVM Write Command - Command Preparation
  *
- * @param nsid Namespace Identifier"
+ * @param nsid Namespace Identifier
  * @param slba Starting LBA
  * @param nlb Number of Logical Blocks
  * @param dtype Directtive Type
@@ -26,14 +26,13 @@
  * returned.
  */
 int
-nvme_nvm_write_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb, uint8_t dtype,
-		    bool stc, uint8_t prinfo, bool fua, bool lr, uint8_t dspec, uint8_t lbat,
-		    uint8_t lbatm);
+nvme_nvm_write_prep(void *cmd_buf, uint32_t, uint64_t, uint8_t, uint8_t, bool, uint8_t, bool, bool,
+		    uint8_t, uint8_t, uint8_t);
 
 /**
  * NVM Read Command - Command Preparation
  *
- * @param nsid Namespace Identifier"
+ * @param nsid Namespace Identifier
  * @param slba Starting LBA
  * @param nlb Number of Logical Blocks
  * @param dtype Directtive Type
@@ -49,14 +48,13 @@ nvme_nvm_write_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb, ui
  * returned.
  */
 int
-nvme_nvm_read_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb, uint8_t dtype,
-		   bool stc, uint8_t prinfo, bool fua, bool lr, uint8_t dspec, uint8_t lbat,
-		   uint8_t lbatm);
+nvme_nvm_read_prep(void *cmd_buf, uint32_t, uint64_t, uint8_t, uint8_t, bool, uint8_t, bool, bool,
+		   uint8_t, uint8_t, uint8_t);
 
 /**
  * NVM Write Uncorrectable Command - Command Preparation
  *
- * @param nsid Namespace Identifier"
+ * @param nsid Namespace Identifier
  * @param slba Starting LBA
  * @param nlb Number of Logical Blocks
  *
@@ -64,12 +62,12 @@ nvme_nvm_read_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb, uin
  * returned.
  */
 int
-nvme_nvm_write_uncor_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb);
+nvme_nvm_write_uncor_prep(void *cmd_buf, uint32_t, uint64_t, uint8_t);
 
 /**
  * NVM Write Zeroes Command - Command Preparation
  *
- * @param nsid Namespace Identifier"
+ * @param nsid Namespace Identifier
  * @param slba Starting LBA
  * @param nlb Number of Logical Blocks
  *
@@ -77,4 +75,4 @@ nvme_nvm_write_uncor_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t n
  * returned.
  */
 int
-nvme_nvm_write_zeroes_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb);
+nvme_nvm_write_zeroes_prep(void *cmd_buf, uint32_t, uint64_t, uint8_t);

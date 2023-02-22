@@ -329,9 +329,9 @@ enum nvme_opc_kvs {
  */
 struct nvme_nvm_write {
 	uint8_t opc;       ///< Command Opcode
-	uint8_t rsvd_cdw0; ///< Command Opcode
+	uint8_t rsvd_cdw0; ///< Reserved
 	uint16_t cid;      ///< Command Identifier
-	uint32_t nsid;     ///< Namespace Identifier"
+	uint32_t nsid;     ///< Namespace Identifier
 	uint32_t cdw02;    ///< Command Dword 02
 	uint32_t cdw03;    ///< Command Dword 03
 	uint32_t cdw04;    ///< Command Dword 04
@@ -341,26 +341,33 @@ struct nvme_nvm_write {
 	uint32_t cdw08;    ///< Command Dword 08
 	uint32_t cdw09;    ///< Command Dword 09
 	uint64_t slba;     ///< Starting LBA
-	struct {
-		uint32_t nlb    : 16; ///< Number of Logical Blocks
-		uint32_t rsvd2  : 4;  ///< Reserved
-		uint32_t dtype  : 4;  ///< Directtive Type
-		uint32_t stc    : 1;  ///< Storage Tag Check
-		uint32_t rsvd1  : 1;  ///< Reserved
-		uint32_t prinfo : 4;  ///< Protection Information
-		uint32_t fua    : 1;  ///< Force Unit Access
-		uint32_t lr     : 1;  ///< Limited Retry
-	} bits1;
-	uint8_t dspec; ///< Directive Specific
-	uint8_t rsvd1; ///< Reserved
-	struct {
-		uint8_t rsvd : 8; ///< Reserved
-	} bits2;
+
+	union {
+		struct {
+			uint32_t nlb    : 16; ///< Number of Logical Blocks
+			uint32_t rsvd2  : 4;  ///< Reserved
+			uint32_t dtype  : 4;  ///< Directtive Type
+			uint32_t stc    : 1;  ///< Storage Tag Check
+			uint32_t rsvd1  : 1;  ///< Reserved
+			uint32_t prinfo : 4;  ///< Protection Information
+			uint32_t fua    : 1;  ///< Force Unit Access
+			uint32_t lr     : 1;  ///< Limited Retry
+		};
+		uint32_t raw;
+	} bits1; ///< Command Dword 12
+
+	uint8_t dspec;  ///< Directive Specific
+	uint8_t rsvd1;  ///< Reserved
+	uint32_t cdw13; ///< Command Dword 13
 	uint32_t cdw14; ///< Command Dword 14
-	struct {
-		uint32_t lbat  : 16; ///< Logical Block Application Tag
-		uint32_t lbatm : 16; ///< Logical Block Application Tag Mask
-	} bits3;
+
+	union {
+		struct {
+			uint32_t lbat  : 16; ///< Logical Block Application Tag
+			uint32_t lbatm : 16; ///< Logical Block Application Tag Mask
+		};
+		uint32_t raw;
+	} bits3; ///< Command Dword 15
 };
 
 /**
@@ -370,9 +377,9 @@ struct nvme_nvm_write {
  */
 struct nvme_nvm_read {
 	uint8_t opc;       ///< Command Opcode
-	uint8_t rsvd_cdw0; ///< Command Opcode
+	uint8_t rsvd_cdw0; ///< Reserved
 	uint16_t cid;      ///< Command Identifier
-	uint32_t nsid;     ///< Namespace Identifier"
+	uint32_t nsid;     ///< Namespace Identifier
 	uint32_t cdw02;    ///< Command Dword 02
 	uint32_t cdw03;    ///< Command Dword 03
 	uint32_t cdw04;    ///< Command Dword 04
@@ -382,26 +389,33 @@ struct nvme_nvm_read {
 	uint32_t cdw08;    ///< Command Dword 08
 	uint32_t cdw09;    ///< Command Dword 09
 	uint64_t slba;     ///< Starting LBA
-	struct {
-		uint32_t nlb    : 16; ///< Number of Logical Blocks
-		uint32_t rsvd2  : 4;  ///< Reserved
-		uint32_t dtype  : 4;  ///< Directtive Type
-		uint32_t stc    : 1;  ///< Storage Tag Check
-		uint32_t rsvd1  : 1;  ///< Reserved
-		uint32_t prinfo : 4;  ///< Protection Information
-		uint32_t fua    : 1;  ///< Force Unit Access
-		uint32_t lr     : 1;  ///< Limited Retry
-	} bits1;
-	uint8_t dspec; ///< Directive Specific
-	uint8_t rsvd1; ///< Reserved
-	struct {
-		uint8_t rsvd : 8; ///< Reserved
-	} bits2;
+
+	union {
+		struct {
+			uint32_t nlb    : 16; ///< Number of Logical Blocks
+			uint32_t rsvd2  : 4;  ///< Reserved
+			uint32_t dtype  : 4;  ///< Directtive Type
+			uint32_t stc    : 1;  ///< Storage Tag Check
+			uint32_t rsvd1  : 1;  ///< Reserved
+			uint32_t prinfo : 4;  ///< Protection Information
+			uint32_t fua    : 1;  ///< Force Unit Access
+			uint32_t lr     : 1;  ///< Limited Retry
+		};
+		uint32_t raw;
+	} bits1; ///< Command Dword 12
+
+	uint8_t dspec;  ///< Directive Specific
+	uint8_t rsvd1;  ///< Reserved
+	uint32_t cdw13; ///< Command Dword 13
 	uint32_t cdw14; ///< Command Dword 14
-	struct {
-		uint32_t lbat  : 16; ///< Logical Block Application Tag
-		uint32_t lbatm : 16; ///< Logical Block Application Tag Mask
-	} bits3;
+
+	union {
+		struct {
+			uint32_t lbat  : 16; ///< Logical Block Application Tag
+			uint32_t lbatm : 16; ///< Logical Block Application Tag Mask
+		};
+		uint32_t raw;
+	} bits3; ///< Command Dword 15
 };
 
 /**
@@ -411,9 +425,9 @@ struct nvme_nvm_read {
  */
 struct nvme_nvm_write_uncor {
 	uint8_t opc;       ///< Command Opcode
-	uint8_t rsvd_cdw0; ///< Command Opcode
+	uint8_t rsvd_cdw0; ///< Reserved
 	uint16_t cid;      ///< Command Identifier
-	uint32_t nsid;     ///< Namespace Identifier"
+	uint32_t nsid;     ///< Namespace Identifier
 	uint32_t cdw02;    ///< Command Dword 02
 	uint32_t cdw03;    ///< Command Dword 03
 	uint32_t cdw04;    ///< Command Dword 04
@@ -423,10 +437,15 @@ struct nvme_nvm_write_uncor {
 	uint32_t cdw08;    ///< Command Dword 08
 	uint32_t cdw09;    ///< Command Dword 09
 	uint64_t slba;     ///< Starting LBA
-	struct {
-		uint32_t nlb        : 16; ///< Number of Logical Blocks
-		uint32_t rsvd_cdw12 : 16; ///< Reserved
-	} bits1;
+
+	union {
+		struct {
+			uint32_t nlb        : 16; ///< Number of Logical Blocks
+			uint32_t rsvd_cdw12 : 16; ///< Reserved
+		};
+		uint32_t raw;
+	} bits1; ///< Command Dword 12
+
 	uint32_t cdw13; ///< Command Dword 13
 	uint32_t cdw14; ///< Command Dword 14
 	uint32_t cdw15; ///< Command Dword 15
@@ -441,7 +460,7 @@ struct nvme_nvm_write_zeroes {
 	uint8_t opc;       ///< Command Opcode
 	uint8_t rsvd_cdw0; ///< Command Opcode
 	uint16_t cid;      ///< Command Identifier
-	uint32_t nsid;     ///< Namespace Identifier"
+	uint32_t nsid;     ///< Namespace Identifier
 	uint32_t cdw02;    ///< Command Dword 02
 	uint32_t cdw03;    ///< Command Dword 03
 	uint32_t cdw04;    ///< Command Dword 04
@@ -451,10 +470,15 @@ struct nvme_nvm_write_zeroes {
 	uint32_t cdw08;    ///< Command Dword 08
 	uint32_t cdw09;    ///< Command Dword 09
 	uint64_t slba;     ///< Starting LBA
-	struct {
-		uint32_t nlb        : 16; ///< Number of Logical Blocks
-		uint32_t rsvd_cdw12 : 16; ///< Reserved
-	} bits1;
+
+	union {
+		struct {
+			uint32_t nlb        : 16; ///< Number of Logical Blocks
+			uint32_t rsvd_cdw12 : 16; ///< Reserved
+		};
+		uint32_t raw;
+	} bits1; ///< Command Dword 12
+
 	uint32_t cdw13; ///< Command Dword 13
 	uint32_t cdw14; ///< Command Dword 14
 	uint32_t cdw15; ///< Command Dword 15

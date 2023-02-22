@@ -9,29 +9,37 @@
  *     of relying on macros
  * - add use of little-endian types
  * - add use of little-endian conversion
+ * - fix generation of struct to support assignment of bit-fields
  */
 #include <stdbool.h>
 #include <stdint.h>
 #include <libnvme_core.h>
 
-{% for prepper in data %}
+{% for entity in data %}
 int
-{{ prepper.sym }}_prep(void *cmd_buf, 
-{%- for typ, acc, sym, doc in prepper.params -%}
-{{ typ }} {{ sym }}
-{% if not loop.last %},{% endif %}
+{{ entity.sym }}_prep(void *cmd_buf, 
+{%- for param in entity.ant["params"] -%}
+        {{ param.ant.typ }} {{ param.sym }}
+        {% if not loop.last %},{% endif %}
 {%- endfor -%}
 )
 {
-        struct {{ prepper.sym }} *cmd = cmd_buf; 
+        struct {{ entity.sym }} *cmd = cmd_buf; 
 
-        cmd->opc = {{ "0x%x" % prepper.opc }};
+        cmd->opc = {{ "0x%x" % entity.ant.opc }};
 
-        {% for typ, acc, sym, doc in prepper.params -%}
-        cmd->{{ acc }} = {{ sym }};
-        {%- endfor %}
-
-        // TODO: replace '.bits'-accessor, with inline, compound bit-mask+shift
+{% for member in entity.members if member.ant.chosen -%}
+{% if member.cls in ["bitfield"] -%}
+        cmd->{{ member.sym }}.raw = \
+        {% for bits in member.members if bits.ant.chosen -%}
+        (({{ bits.sym }} & {{ bits.ant.mask }}) << {{ bits.ant.sd }})
+        {% if not loop.last %}|{% endif %}
+        {%- endfor -%}
+        ;
+{%- else -%}
+        cmd->{{ member.sym }} = {{ member.sym }};
+{%- endif %}
+{%- endfor %}
 
         return 0;
 }

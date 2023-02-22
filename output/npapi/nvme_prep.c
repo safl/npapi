@@ -9,6 +9,7 @@
  *     of relying on macros
  * - add use of little-endian types
  * - add use of little-endian conversion
+ * - fix generation of struct to support assignment of bit-fields
  */
 #include <stdbool.h>
 #include <stdint.h>
@@ -25,17 +26,10 @@ nvme_nvm_write_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb, ui
 
 	cmd->nsid = nsid;
 	cmd->slba = slba;
-	cmd->bits1.nlb = nlb;
-	cmd->bits1.dtype = dtype;
-	cmd->bits1.stc = stc;
-	cmd->bits1.prinfo = prinfo;
-	cmd->bits1.fua = fua;
-	cmd->bits1.lr = lr;
+	cmd->bits1.raw = ((nlb & 65535) << 0) | ((dtype & 15) << 20) | ((stc & 1) << 24) |
+			 ((prinfo & 15) << 26) | ((fua & 1) << 30) | ((lr & 1) << 31);
 	cmd->dspec = dspec;
-	cmd->bits3.lbat = lbat;
-	cmd->bits3.lbatm = lbatm;
-
-	// TODO: replace '.bits'-accessor, with inline, compound bit-mask+shift
+	cmd->bits3.raw = ((lbat & 65535) << 0) | ((lbatm & 65535) << 16);
 
 	return 0;
 }
@@ -51,17 +45,10 @@ nvme_nvm_read_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t nlb, uin
 
 	cmd->nsid = nsid;
 	cmd->slba = slba;
-	cmd->bits1.nlb = nlb;
-	cmd->bits1.dtype = dtype;
-	cmd->bits1.stc = stc;
-	cmd->bits1.prinfo = prinfo;
-	cmd->bits1.fua = fua;
-	cmd->bits1.lr = lr;
+	cmd->bits1.raw = ((nlb & 65535) << 0) | ((dtype & 15) << 20) | ((stc & 1) << 24) |
+			 ((prinfo & 15) << 26) | ((fua & 1) << 30) | ((lr & 1) << 31);
 	cmd->dspec = dspec;
-	cmd->bits3.lbat = lbat;
-	cmd->bits3.lbatm = lbatm;
-
-	// TODO: replace '.bits'-accessor, with inline, compound bit-mask+shift
+	cmd->bits3.raw = ((lbat & 65535) << 0) | ((lbatm & 65535) << 16);
 
 	return 0;
 }
@@ -75,9 +62,7 @@ nvme_nvm_write_uncor_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t n
 
 	cmd->nsid = nsid;
 	cmd->slba = slba;
-	cmd->bits1.nlb = nlb;
-
-	// TODO: replace '.bits'-accessor, with inline, compound bit-mask+shift
+	cmd->bits1.raw = ((nlb & 65535) << 0);
 
 	return 0;
 }
@@ -91,9 +76,7 @@ nvme_nvm_write_zeroes_prep(void *cmd_buf, uint32_t nsid, uint64_t slba, uint8_t 
 
 	cmd->nsid = nsid;
 	cmd->slba = slba;
-	cmd->bits1.nlb = nlb;
-
-	// TODO: replace '.bits'-accessor, with inline, compound bit-mask+shift
+	cmd->bits1.raw = ((nlb & 65535) << 0);
 
 	return 0;
 }

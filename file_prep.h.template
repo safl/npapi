@@ -7,21 +7,21 @@
  * NOTE: This file is created using yace: https://github.com/safl/yace
  */
 
-{% for prepper in data %}
+{% for entity in data %}
 /**
- * {{ prepper.doc }} - Command Preparation
+ * {{ entity.doc }} - Command Preparation
  *
-{%- for typ, acc, sym, doc in prepper.params %}
- * @param {{ sym }} {{ doc }}
+{%- for param in entity.ant.params %}
+ * @param {{ param.sym }} {{ param.doc }}
 {%- endfor %}
  *
  * @return On success 0 is returned. On error, -errno is
  * returned.
  */
 int
-{{ prepper.sym }}_prep(void *cmd_buf, 
-{%- for typ, acc, sym, doc in prepper.params -%}
-{{ typ }} {{ sym }}
+{{ entity.sym }}_prep(void *cmd_buf, 
+{%- for param in entity.ant.params -%}
+{{ param.ant.typ }} {{ param.ant.sym }}
 {% if not loop.last %},{% endif %}
 {%- endfor -%}
 );

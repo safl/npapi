@@ -578,9 +578,7 @@ nvme_nvm_write_yaml(FILE *stream, const struct nvme_nvm_write *obj, int flags)
 	wrtn += fprintf(stream, "%*slr: 0x%x\n", 4, "", obj->bits1.lr);
 	wrtn += fprintf(stream, "%*sdspec: 0x%" PRIx8 "\n", 2, "", obj->dspec);
 	wrtn += fprintf(stream, "%*srsvd1: RESERVED\n", 2, "");
-	wrtn += fprintf(stream, "%*sbits2:\n", 2, "");
-
-	wrtn += fprintf(stream, "%*srsvd: 0x%x\n", 4, "", obj->bits2.rsvd);
+	wrtn += fprintf(stream, "%*scdw13: 0x%" PRIx32 "\n", 2, "", obj->cdw13);
 	wrtn += fprintf(stream, "%*scdw14: 0x%" PRIx32 "\n", 2, "", obj->cdw14);
 	wrtn += fprintf(stream, "%*sbits3:\n", 2, "");
 
@@ -674,12 +672,7 @@ nvme_nvm_write_json(FILE *stream, const struct nvme_nvm_write *obj, int flags)
 	wrtn += fprintf(stream, "%*s\"rsvd1\": \"RESERVED\"", 4, "");
 	wrtn += fprintf(stream, ",\n");
 
-	wrtn += fprintf(stream, "%*s\"bits2\": {\n", 4, "");
-
-	wrtn += fprintf(stream, "%*s\"rsvd\": %u", 6, "", obj->bits2.rsvd);
-	wrtn += fprintf(stream, "\n");
-
-	wrtn += fprintf(stream, "%*s}", 4, "");
+	wrtn += fprintf(stream, "%*s\"cdw13\": %" PRIu32 "", 4, "", obj->cdw13);
 	wrtn += fprintf(stream, ",\n");
 
 	wrtn += fprintf(stream, "%*s\"cdw14\": %" PRIu32 "", 4, "", obj->cdw14);
@@ -761,9 +754,7 @@ nvme_nvm_read_yaml(FILE *stream, const struct nvme_nvm_read *obj, int flags)
 	wrtn += fprintf(stream, "%*slr: 0x%x\n", 4, "", obj->bits1.lr);
 	wrtn += fprintf(stream, "%*sdspec: 0x%" PRIx8 "\n", 2, "", obj->dspec);
 	wrtn += fprintf(stream, "%*srsvd1: RESERVED\n", 2, "");
-	wrtn += fprintf(stream, "%*sbits2:\n", 2, "");
-
-	wrtn += fprintf(stream, "%*srsvd: 0x%x\n", 4, "", obj->bits2.rsvd);
+	wrtn += fprintf(stream, "%*scdw13: 0x%" PRIx32 "\n", 2, "", obj->cdw13);
 	wrtn += fprintf(stream, "%*scdw14: 0x%" PRIx32 "\n", 2, "", obj->cdw14);
 	wrtn += fprintf(stream, "%*sbits3:\n", 2, "");
 
@@ -857,12 +848,7 @@ nvme_nvm_read_json(FILE *stream, const struct nvme_nvm_read *obj, int flags)
 	wrtn += fprintf(stream, "%*s\"rsvd1\": \"RESERVED\"", 4, "");
 	wrtn += fprintf(stream, ",\n");
 
-	wrtn += fprintf(stream, "%*s\"bits2\": {\n", 4, "");
-
-	wrtn += fprintf(stream, "%*s\"rsvd\": %u", 6, "", obj->bits2.rsvd);
-	wrtn += fprintf(stream, "\n");
-
-	wrtn += fprintf(stream, "%*s}", 4, "");
+	wrtn += fprintf(stream, "%*s\"cdw13\": %" PRIu32 "", 4, "", obj->cdw13);
 	wrtn += fprintf(stream, ",\n");
 
 	wrtn += fprintf(stream, "%*s\"cdw14\": %" PRIu32 "", 4, "", obj->cdw14);

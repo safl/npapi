@@ -11,8 +11,6 @@ TODO:
 
 * Add a nice src-description
 
-* Add function docs
-
 Thus, the above files are what you should expect to see in the output-directory
 """
 from yace.targets.capi.target import CAPI
@@ -42,10 +40,12 @@ class NPAPI(CAPI):
         """Method creating preppers"""
 
         emitter = Emitter(Path(__file__).parent)
-        preppers = []
 
+        # Populate 'preppers' with entities for command-construction-prepper,
+        # and expand annotations with information for simplified
+        # code-generation in the emitter-template
         ignore = ["opc", "opcode", "cid", "rsvd", "psdt", "fuse"]
-
+        preppers = []
         for entity in (
             ent
             for ent in model.entities
@@ -56,48 +56,56 @@ class NPAPI(CAPI):
                 log.error("Missing ant.opc in: %s", entity.as_dict())
                 return
 
-            prepper = {
-                "sym": entity.sym,
-                "doc": entity.doc,
-                "opc": opc,
-                "params": [],
-            }
+            # This is an entity we want, add to preppers
+            preppers.append(entity)
+
+            # Annotate a list of parameters
+            entity.ant["params"] = []
 
             for member in entity.members:
+
+                # Annotate non-chosen members as such...
                 if member.sym.startswith("cdw"):  # Generic fields => no prep
+                    member.ant["chosen"] = False
                     continue
                 if member.sym in ["mptr", "dptr"]:  # Payload-setup => no prep here
+                    member.ant["chosen"] = False
                     continue
                 if member.sym in ignore:  # Explicit ignore-list => no prep here
+                    member.ant["chosen"] = False
                     continue
                 if member.sym.startswith("rsvd"):  # Reserved fields => no prep
+                    member.ant["chosen"] = False
                     continue
 
-                if member.cls in ["bitfield"]:  # Construct info for bit-operation
-                    for bits in member.members:
-                        if bits.sym in ignore:
-                            continue
-                        if "rsvd" in bits.sym:
-                            continue
-                        prepper["params"].append(
-                            (
-                                "bool" if bits.width == 1 else "uint8_t",
-                                f"{member.sym}.{bits.sym}",
-                                bits.sym,
-                                bits.doc,
-                            )
-                        )
-                else:
-                    prepper["params"].append(
-                        (
-                            "uint%d_t" % member.typ.width,
-                            member.sym,
-                            member.sym,
-                            member.doc,
-                        )
-                    )
+                member.ant["chosen"] = True
 
-            preppers.append(prepper)
+                # Annotate regular field
+                if member.cls in ["field"]:  # Construct info for bit-operation
+                    member.ant["typ"] = "uint%d_t" % member.typ.width
+                    entity.ant["params"].append(member)
+                    continue
+
+                # Annotate bitfield
+                sd = 0
+                for bits in member.members:
+                    sd += bits.width    # Increment shift-distance
+
+                    if bits.sym in ignore:
+                        bits.ant["chosen"] = False
+                        continue
+                    if "rsvd" in bits.sym:
+                        bits.ant["chosen"] = False
+                        continue
+
+                    bits.ant["chosen"] = True
+
+                    bits.ant["sd"] = sd - bits.width
+                    bits.ant["mask"] = (1 << bits.width) - 1
+                    bits.ant["typ"] = "bool" if bits.width == 1 else "uint8_t"
+                    bits.ant["acc"] = f"{member.sym}.{bits.sym}"
+
+                    entity.ant["params"].append(bits)
 
         with hdr_path.open("w") as hdrfile:
             hdrfile.write(
